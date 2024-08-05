@@ -1,0 +1,73 @@
+<!-- templates/shop/payment.html -->
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Payment</title>
+    <script src="https://js.stripe.com/v3/"></script>
+</head>
+<body>
+    <h1>Complete Your Payment</h1>
+    <form id="payment-form">
+        <div id="card-element"><!-- A Stripe Element will be inserted here. --></div>
+        <button id="submit">Pay</button>
+        <div id="error-message"><!-- Error messages will be shown here. --></div>
+    </form>
+
+    <script>
+        var stripe = Stripe('{{ STRIPE_PUBLISHABLE_KEY }}');
+        var elements = stripe.elements();
+
+        var style = {
+            base: {
+                color: "#32325d",
+                fontFamily: 'Arial, sans-serif',
+                fontSmoothing: "antialiased",
+                fontSize: "16px",
+                "::placeholder": {
+                    color: "#32325d"
+                }
+            },
+            invalid: {
+                fontFamily: 'Arial, sans-serif',
+                color: "#fa755a",
+                iconColor: "#fa755a"
+            }
+        };
+
+        var card = elements.create("card", { style: style });
+        card.mount("#card-element");
+
+        card.on('change', function (event) {
+            var displayError = document.getElementById('error-message');
+            if (event.error) {
+                displayError.textContent = event.error.message;
+            } else {
+                displayError.textContent = '';
+            }
+        });
+
+        var form = document.getElementById('payment-form');
+        form.addEventListener('submit', function (event) {
+            event.preventDefault();
+            stripe.confirmCardPayment("{{ client_secret }}", {
+                payment_method: {
+                    card: card,
+                    billing_details: {
+                        email: "{{ email }}"
+                    }
+                }
+            }).then(function (result) {
+                if (result.error) {
+                    var displayError = document.getElementById('error-message');
+                    displayError.textContent = result.error.message;
+                } else {
+                    if (result.paymentIntent.status === 'succeeded') {
+                        window.location.href = "/shop/success/";
+                    }
+                }
+            });
+        });
+    </script>
+</body>
+</html>

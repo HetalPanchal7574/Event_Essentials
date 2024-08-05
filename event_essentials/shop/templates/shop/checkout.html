@@ -1,0 +1,190 @@
+{% extends 'shop/basic.html' %}
+{% block title %} Checkout - Event_Essentials {% endblock %}
+
+{% block body %}
+<style>
+    /* Add CSS styles here */
+    .container {
+        margin-top: 50px;
+    }
+
+    .form-control {
+        border-radius: 0;
+        border: 1px solid #ccc;
+        padding: 10px;
+        width: 100%;
+        box-sizing: border-box;
+        margin-bottom: 15px;
+    }
+
+    .btn-primary {
+        border-radius: 0;
+        background-color: #007bff;
+        color: #fff;
+        padding: 10px 20px;
+        border: none;
+        cursor: pointer;
+    }
+
+    .btn-primary:hover {
+        background-color: #0056b3;
+    }
+
+    .list-group-item {
+        border-radius: 0;
+        background-color: #f8f9fa;
+        border-color: #dee2e6;
+        margin-bottom: 10px;
+    }
+
+    .list-group-item:hover {
+        background-color: #e2e6ea;
+    }
+
+    .list-group-item span {
+        background-color: #007bff;
+        color: #fff;
+        padding: 5px 10px;
+        border-radius: 15px;
+        margin-left: 10px;
+    }
+
+    h2 {
+        color: #333;
+        font-weight: bold;
+        margin-bottom: 20px;
+    }
+
+    label {
+        font-weight: bold;
+    }
+
+    .breadcrumb {
+        background-color: #03A9F4;
+        margin-bottom: 20px;
+        border-radius: 0;
+    }
+
+    .breadcrumb .breadcrumb-item.active {
+        color: #333;
+    }
+
+    #totalPrice {
+        font-weight: bold;
+        color: #fff;
+    }
+</style>
+
+<div class="container">
+    <div class="row">
+        <div class="col my-4">
+            <h2>Step 1 - Event_Essentials Express Checkout - Review Your Cart Items</h2>
+            <div class="my-4">
+                <ul class="list-group" id="items">
+                </ul>
+                
+                <nav aria-label="breadcrumb">
+                    <ol class="breadcrumb mt-3">
+                        <li class="breadcrumb-item active" aria-current="page">
+                            Your Cart Total Is <b>Rs.<span id="totalPrice"></span></b>. Enter your details below & place your order. Thanks for using Event_Essentials!
+                        </li>
+                    </ol>
+                </nav> 
+            </div>
+        </div>
+        <div class="col-md-6 my-4">
+            <h2>Step 2 - Enter Address & Other Details:</h2>
+            <form method="post" action="/shop/checkout/">
+                {% csrf_token %}
+                <input type="hidden" name="itemsJson" id="itemsJson">
+                <input type="hidden" name="amount" id="amount">
+                <div class="form-group">
+                    <label for="name">First Name</label>
+                    <input type="text" class="form-control" id="name" name="name" placeholder="Full Name" required>
+                </div>
+                <div class="form-group">
+                    <label for="email">Email</label>
+                    <input type="email" class="form-control" id="email" name="email" placeholder="Email" required>
+                </div>
+                <div class="form-group">
+                    <label for="address1">Address</label>
+                    <input type="text" class="form-control" id="address1" name="address1" placeholder="1234 Main St" required>
+                </div>
+                <div class="form-group">
+                    <label for="address2">Address line 2</label>
+                    <input type="text" class="form-control" id="address2" name="address2" placeholder="Apartment, studio, or floor" required>
+                </div>
+                <div class="form-row">
+                    <div class="form-group col-md-6">
+                        <label for="city">City</label>
+                        <input type="text" class="form-control" id="city" name="city" required>
+                    </div>
+                    <div class="form-group col-md-4">
+                        <label for="state">State</label>
+                        <input type="text" class="form-control" id="state" name="state" placeholder="Enter State" required>
+                    </div>
+                    <div class="form-group col-md-2">
+                        <label for="zip_code">Zip</label>
+                        <input type="text" class="form-control" id="zip_code" name="zip_code" required>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="phone">Phone Number</label>
+                    <input type="tel" class="form-control" id="phone" name="phone" required>
+                </div>
+                <button type="submit" class="btn btn-primary">Place Order</button>
+            </form>
+        </div>
+    </div>
+</div>
+
+{% endblock %}
+
+{% block js %}
+<script>
+    if (localStorage.getItem('cart') == null) {
+        var cart = {};
+    } else {
+        cart = JSON.parse(localStorage.getItem('cart'));
+    }
+    console.log(cart);
+    var sum = 0;
+    var totalPrice = 0;
+    if ($.isEmptyObject(cart)) {
+        //if object is empty
+        mystr = `<p>Your cart is empty, please add some items to your cart before checking out!</p>`
+        $('#items').append(mystr);
+    } else {
+        for (item in cart) {
+            let name = cart[item][1];
+            let qty = cart[item][0];
+            let itemPrice = cart[item][2];
+            sum = sum + qty;
+            totalPrice = totalPrice + qty * itemPrice
+            mystr = `<li class="list-group-item d-flex justify-content-between align-items-center">
+                        ${name}
+                        <span class="badge badge-primary badge-pill">${qty}</span>
+                    </li>`
+            $('#items').append(mystr);
+        }
+    }
+    document.getElementById('cart').innerHTML = sum;
+    document.getElementById('totalPrice').innerHTML = totalPrice;
+    $('#itemsJson').val(JSON.stringify(cart));
+
+    // Check if the cart has items before allowing form submission
+    $('form').submit(function(event) {
+        if (sum <= 0) {
+            alert('Your cart is empty. Please add some items to your cart before placing an order.');
+            event.preventDefault(); // Prevent form submission
+        }
+    });
+
+    {% if thank %}
+    alert('Thanks for ordering with us. Your order ID is {{ id }}. Use it to track your order using our order tracker. Your order confirmation has been sent to {{ email }}.');
+    localStorage.clear();
+    document.location = "/shop/payment";
+    {% endif %}
+    $('#amount').val(totalPrice); // Set the total price value to the 'amount' input field
+</script>
+{% endblock %}

@@ -1,0 +1,206 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
+
+    <title>{% block title %}{% endblock %}</title>
+    <style>
+        {% block css %}
+        
+        /* Custom CSS for increased navbar height */
+        .navbar {
+            padding-top: 20px;
+            padding-bottom: 20px;
+        }
+        .navbar-brand,
+        .nav-link,
+        .form-inline,
+        .btn,
+        .nav-item a {
+            line-height: 25px; /* Adjust line-height to match the increased height */
+        }
+        {% endblock %}
+    </style>
+</head>
+<body>
+
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <a class="navbar-brand" href="/shop">Event Essentials</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav mr-auto">
+            <li class="nav-item active">
+                <a class="nav-link" href="/shop">Home <span class="sr-only">(current)</span></a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/shop/tracker">Tracker</a>
+              </li>
+              <li class="nav-item">
+                  <a class="nav-link" href="/shop/theme">Theme</a>
+              </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/shop/about">About Us</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/shop/contact">Contact Us</a>
+            </li>
+        </ul>
+
+        <!-- Search bar with added margin -->
+        <form method='get' action='/shop/search/' class="form-inline my-2 my-lg-0 mr-2">
+            <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search" name="search" id="search">
+            <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+        </form>
+
+        <!-- Cart button with added margin -->
+        <button type="button" class="btn btn-secondary mr-2" id="popcart" data-container="body" data-toggle="popover" data-placement="bottom" data-html="true" data-content="Vivamus sagittis lacus vel augue laoreet rutrum faucibus.">
+            Cart(<span id="cart">0</span>)
+        </button>
+
+        <!-- User section with login/logout and username display -->
+        {% if request.session.username %}
+        <li class="nav-item" style="margin-right: 10px;">
+            <a class="nav-link" style="color: black; font-size: 15px; border: 1px solid black; background-color: white; padding: 6px 12px; margin: -19px 0px 0px 0px">{{ request.session.username }}</a>
+        </li>
+        <li class="nav-item" style="margin-right: 10px;">
+            <a class="nav-link" href="{% url 'logout' %}" style="color: black; font-size: 15px; border: 1px solid black; background-color: white; padding: 6px 12px; margin: -19px 0px 0px 0px">Logout</a>
+        </li>
+        {% else %}
+        <li class="nav-item" style="margin-right: 10px;">
+            <a class="nav-link" href="{% url 'LoginPage' %}" style="color: black; font-size: 15px; border: 1px solid black; background-color: white; padding: 6px 12px; margin: -19px 0px 0px 0px">Login</a>
+        </li>
+        {% endif %}
+    </div>
+</nav>
+
+{% block body %}{% endblock %}
+
+<!-- Optional JavaScript -->
+<!-- jQuery first, then Popper.js, then Bootstrap JS -->
+<script src="https://code.jquery.com/jquery-3.3.1.js" integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.min.js" integrity="sha384-wHAiFfRlMFy6i5SRaxvfOCifBUQy1xHdJ/yoi7FRNXMRBu5WHdZYu1hA6ZOblgut" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js" integrity="sha384-B0UglyR+jN6CkvvICOB2joaf5I4l3gm9GU6Hc1og6Ls7i6U/mkkaduKaBhlAXv9k" crossorigin="anonymous"></script>
+{% block js %}{% endblock %}
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+{% block footer %}
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+<!-- GOOGLE FONTS -->
+<link rel="preconnect" href="https://fonts.gstatic.com">
+<link href="https://fonts.googleapis.com/css2?family=Fredoka+One&family=Play&display=swap" rel="stylesheet">
+</head>
+<body>
+<style>
+    body {
+        margin: 0;
+        overflow-x: hidden;
+    }
+
+    .footer {
+        margin-top:100px ;
+        background: rgb(52, 58, 64);
+        padding: 30px 0px;
+        font-family: 'Play', sans-serif;
+        text-align: center;
+    }
+
+    .footer .row {
+        width: 100%;
+        margin: 1% 0%;
+        padding: 0.6% 0%;
+        color: white;
+        font-size: 0.8em;
+        justify-content: center;
+    }
+
+    .footer .row a {
+        text-decoration: none;
+        color: white;
+        transition: 0.5s;
+    }
+
+    .footer .row a:hover {
+        color: #fff;
+    }
+
+    .footer .row ul {
+        width: 100%;
+    }
+
+    .footer .row ul li {
+        display: inline-block;
+        margin: 0px 30px;
+    }
+
+    .footer .row a i {
+        font-size: 2em;
+        margin: 0% 1%;
+    }
+
+    @media (max-width: 720px) {
+        .footer {
+            text-align: left;
+            padding: 5%;
+        }
+
+        .footer .row ul li {
+            display: block;
+            margin: 10px 0px;
+            text-align: left;
+        }
+
+        .footer .row a i {
+            margin: 0% 3%;
+        }
+    }
+</style>
+<footer>
+    <div class="footer">
+        <div class="row">
+            <a href="https://www.facebook.com/ebook.coms" style="margin-right: 20px;"><i class="fa fa-facebook"></i></a>
+            <a href="https://www.instagram.com/" style="margin-right: 20px;"><i class="fa fa-instagram"></i></a>
+            <a href="https://twitter.coms" style="margin-right: 20px;"><i class="fa fa-twitter"></i></a>
+        </div>
+        <div class="row">
+            <ul>
+                <li><a href="/shop">HOME</a></li>
+                <li><a href="/shop/tracker">TRACKER</a></li>
+                <li><a href="/shop/about">ABOUT US</a></li>
+                <li><a href="/shop/contact">CONTACT US</a></li>
+                <li><a href="/shop/privacypolicy">PRIVACY & POLICY</a></li>
+            </ul>
+        </div>
+        <div class="row">
+            ALL COPYRIGHTS ARE RESERVED BY @2024 EVENT ESSIENTIALS ||
+        </div>
+    </div>
+</footer>
+</div>
+{% endblock %}
+
+</body>
+</html>

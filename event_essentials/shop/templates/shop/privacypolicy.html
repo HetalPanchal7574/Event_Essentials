@@ -1,0 +1,115 @@
+{% extends 'shop/basic.html'%}
+{% block title%} Privacy Policy{% endblock %}
+{% block css %}
+/* Basic styling */
+body {
+    font-family: Arial, sans-serif;
+    line-height: 1.6;
+    margin: 0;
+    {% comment %} padding: 20px; {% endcomment %}
+    background-color: #f2f2f2;
+    
+}
+
+header {
+    background-color: #333;
+    color: #fff;
+    padding: 10px 20px;
+    text-align: center;
+}
+
+h1, h2 {
+    color: #333;
+}
+
+main {
+    background-color: #fff;
+    padding: 20px;
+    margin-top: 20px;
+    box-shadow: 0 0 10px rgba(0,0,0,0.1);
+}
+
+section {
+    margin-bottom: 20px;
+}
+
+ul {
+    margin-bottom: 10px;
+}
+
+a {
+    color: #007bff;
+    text-decoration: none;
+}
+
+a:hover {
+    text-decoration: underline;
+}
+{% endblock %}
+
+{% block body%}
+
+
+<main>
+    <section>
+        <h2>Introduction</h2>
+        <p>Welcome to our Privacy Policy. Your privacy is important to us. This policy explains our practices regarding the collection, use, and disclosure of information when you use our website to rent or purchase event decoration themes.</p>
+    </section>
+    <br>
+    <section>
+        <h2>Information We Collect</h2>
+        <p>We collect the following types of information:</p>
+        <ul>
+            <li>Information you provide when renting a theme (e.g., name, email address, phone number)</li>
+            <li>Information collected for the fast delivery (e.g., through cookies and similar technologies)</li>
+        </ul>
+    </section>
+    <br>
+    <section>
+        <h2>Use of Information</h2>
+        <p>We use the information we collect to:</p>
+        <ul>
+            <li>Process your theme rental orders</li>
+            <li>Communicate with you about your orders and our services</li>
+            <li>Improve our website and services</li>
+        </ul>
+    </section>
+    <br>
+    <section>
+        <h2>Payment Information</h2>
+        <p>Currently, we only accept Cash on Delivery (COD) as a payment option. This means:</p>
+        <ul>
+            <li>We do not store credit card or other payment method details.</li>
+            <li>You will pay in cash at the time of delivery of the rented theme.</li>
+        </ul>
+    </section>
+    <br>
+    <section>
+        <h2>Cookies and Tracking Technologies</h2>
+        <p>We use cookies and similar technologies to:</p>
+        <ul>
+            <li>Ensure our website functions properly</li>
+            <li>Analyze trends and improve our services</li>
+        </ul>
+        <p>You can control cookies through your browser settings.</p>
+    </section>
+    <br>
+    <section>
+        <h2>Security</h2>
+        <p>We implement security measures to protect your information from unauthorized access and use.</p>
+    </section>
+    <br>
+    <section>
+        <h2>Changes to This Privacy Policy</h2>
+        <p>We may update this Privacy Policy from time to time. We will notify you of any changes by posting the new Privacy Policy on this page.</p>
+    </section>
+    <br>
+    <section>
+        <h2>Contact Us</h2>
+        <p>If you have any questions about this Privacy Policy, please contact us at:</p>
+        <p>Email: eventessentials@gmail.com<br>
+        Phone: +1234567890</p>
+    </section>
+    <br>
+</main>
+{% endblock %}
